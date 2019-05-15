@@ -1,0 +1,26 @@
+############################################################################################################################################################
+## CALCULATING Conservation  and Acceleration using phyloP in the human branch relative to the entire tree
+cp query/goodalignments.txt .
+mkdir -p PhyloP_Results
+
+for file in `cat goodalignments.txt` ;
+do root=`basename $file .fa.prunned`;
+phyloP ref/MODELS_HKY85/$root.mod query/$file -i FASTA --subtree hg19 --method SPH --mode CONACC > PhyloP_Results/$root.report ;
+done 
+
+# To pull down the data values after phyloP finishes running
+
+
+cd PhyloP_Results
+for filename in *.report; do grep -H "p-value of conservation in subtree given total:" $filename; done > output.phyloP_con.txt
+cat output.phyloP_con.txt | awk -F":" '{print $1 "\t" $3 }' | awk '{print $1 "\t" $2 }'  > phyloP_con.tab
+awk -F"." '{print $1 ":" $2  }' phyloP_con.tab > chr_pos.tab
+paste chr_pos.tab phyloP_con.tab  | column -s '\t' -t | awk '{print $1 "\t" $3  }'  > DHS_phyloP_con.list
+
+
+for filename in *.report; do grep -H "p-value of acceleration in subtree given total:" $filename; done > output.phyloP_acc.txt
+cat output.phyloP_acc.txt | awk -F":" '{print $1 "\t" $3 }' | awk '{print $1 "\t" $2 }'  > phyloP_acc.tab
+awk -F"." '{print $1 ":" $2  }' phyloP_acc.tab > chr_pos.tab
+paste chr_pos.tab phyloP_acc.tab  | column -s '\t' -t | awk '{print $1 "\t" $3  }'  > DHS_phyloP_acc.list
+
+############################################################################################################################################################
