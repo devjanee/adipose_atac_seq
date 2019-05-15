@@ -17,3 +17,5 @@ gkmSVM_null_v_randomGenome.R - R commands to determine if a set of sequences is 
 gkmSVM_OCRs_v_closestNull.R - R commands to classify OCRs to the closest common sites using R package "gkmSVM" (http://www.beerlab.org/gkmsvm/)
 
 TFBSTools_motif_analyses.R - R commands to score motifs in a given set of sequences using  R package "TFBSTools" (https://bioconductor.org/packages/release/bioc/vignettes/TFBSTools/inst/doc/TFBSTools.html)
+
+phyloP_script.txt - bash commands to run phyloP (http://compgen.cshl.edu/phast/background.php) on OCRs
